@@ -23,6 +23,7 @@ class Authentication:
 
         with open(self.file_path, "a") as f:
             f.write(f"{username} {password}\n")
+        print(f"{username} wurde erfolgreich angelegt!")
 
     def login(self):
         """ Eingabe der Login Daten"""
@@ -46,4 +47,14 @@ class Authentication:
 
 
 auth = Authentication(USER_FILE)
-auth.login()
+
+while True:
+    mode = input("Menu:\n Press 1 to register new User:, Press 2 to Login, Press q to quit\n")
+    if mode == "1":
+        auth.register(input("Username: "), input("Password: "))
+
+    if mode == "2":
+        auth.login()
+
+    if mode == "q":
+        break
