@@ -1,7 +1,25 @@
 import random
 import string
+from cryptography.fernet import Fernet
 
 USER_FILE = "user.txt"
+
+
+"""def write_key():
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:
+        key_file.write(key)"""
+
+
+def load_key():
+    file = open("key.key", "rb")
+    key = file.read()
+    file.close()
+    return key
+
+
+key = load_key()
+fer = Fernet(key)
 
 
 def random_string(length):
@@ -22,7 +40,7 @@ class Authentication:
         """Neuen Nutzer regestrieren: Eingabe Name & Password"""
 
         with open(self.file_path, "a") as f:
-            f.write(f"{username} {password}\n")
+            f.write(f"{username} {self.encrypt(password)}\n")
         print(f"{username} wurde erfolgreich angelegt!")
 
     def login(self):
@@ -45,16 +63,27 @@ class Authentication:
         for i in range(0, count):
             self.register(random_string(6), random_string(8))
 
+    def encrypt(self, password):
+        pwd = fer.encrypt(password.encode()).decode()
+        # print(pwd)
+        return pwd
+
+    def decrypt(self):
+        pass
+
 
 auth = Authentication(USER_FILE)
 
 while True:
-    mode = input("Menu:\n Press 1 to register new User:, Press 2 to Login, Press q to quit\n")
+    mode = input("Menu:\n Press 1 to register new User:, Press 2 to Login, Press q to , 3 for writing the key\n")
     if mode == "1":
         auth.register(input("Username: "), input("Password: "))
 
     if mode == "2":
         auth.login()
+
+    if mode == "3":
+        auth.encrypt("Test")
 
     if mode == "q":
         break
