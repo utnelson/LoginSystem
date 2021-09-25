@@ -22,7 +22,7 @@ class Authentication:
         """Neuen Nutzer regestrieren: Eingabe Name & Password"""
 
         with open(self.file_path, "a") as f:
-            f.write(f"\n{username} {password}")
+            f.write(f"{username} {password}\n")
 
     def login(self):
         """ Eingabe der Login Daten"""
@@ -46,5 +46,5 @@ class Authentication:
 
 
 auth = Authentication(USER_FILE)
-# auth.random_user(15)
+auth.random_user(15)
 auth.login()
