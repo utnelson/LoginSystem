@@ -46,5 +46,4 @@ class Authentication:
 
 
 auth = Authentication(USER_FILE)
-auth.random_user(15)
 auth.login()
